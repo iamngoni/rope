@@ -1,5 +1,5 @@
 name: rope
-description: "A new Flutter package project."
+description: "A fast, immutable rope data structure in Dart using a SumTree architecture. Inspired by Zed's implementation, this rope is optimized for large-scale string manipulation and editor-like use cases."
 version: 0.0.1
 homepage: https://github.com/iamngoni/rope
 
