@@ -1,0 +1,11 @@
+name: rope
+description: "A new Flutter package project."
+version: 0.0.1
+homepage: https://github.com/iamngoni/rope
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dev_dependencies:
+  test: ^1.25.8
+  very_good_analysis: ^7.0.0
