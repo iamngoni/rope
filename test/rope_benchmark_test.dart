@@ -6,8 +6,7 @@ import 'package:test/test.dart';
 void main() {
   group('Rope Performance Benchmarks', () {
     // Default iterations reduced to avoid timeouts in tests
-    const iterations = 100;
-    final random = Random(42); // Fixed seed for reproducibility
+    final random = Random(42);
 
     final Stopwatch stopwatch = Stopwatch();
 
