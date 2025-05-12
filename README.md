@@ -98,7 +98,7 @@ This allows efficient traversal and slicing of large text structures.
 
 ## 📄 License
 
-MIT. Based on concepts in [Zed's Rope & SumTree](https://zed.dev/blog/zed-decoded-rope-sumtree).
+[MIT](./LICENSE). Based on concepts in [Zed's Rope & SumTree](https://zed.dev/blog/zed-decoded-rope-sumtree).
 
 ---
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
