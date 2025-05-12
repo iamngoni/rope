@@ -2,6 +2,7 @@
 
 A fast, immutable rope data structure in Dart using a SumTree architecture.
 Inspired by Zed's implementation, this rope is optimized for large-scale string manipulation and editor-like use cases.
+Supports bidirectional text handling for mixed LTR/RTL content (Arabic, Hebrew, Persian, etc).
 
 ---
 
@@ -17,6 +18,7 @@ Developed with 💙 by [Ngonidzashe Mangudya](https://twitter.com/iamngoni_)
 - **SumTree-based architecture** with node-level summaries
 - Efficient `insert`, `delete`, `split`, `concat`, `substring`, `charAt`
 - Multi-line and character-aware summaries (`TextSummary`)
+- **Bidirectional text support** for languages with right-to-left scripts
 - Designed for speed, immutability, and extensibility
 
 ## 📦 Installation
@@ -68,6 +70,31 @@ void main() {
 }
 ```
 
+### Bidirectional Text Support
+
+```dart
+void main() {
+  // Create a bidirectional rope with mixed LTR/RTL content
+  final bidiRope = BidiRope.fromString("Hello שלום");
+  
+  // Check if the rope contains RTL text
+  print(bidiRope.containsRtl); // true
+  
+  // Check if the rope is primarily RTL 
+  print(bidiRope.isRtl); // false
+  
+  // Find all RTL segments (start/end indices)
+  final segments = bidiRope.getRtlSegments(); 
+  print(segments); // [[6, 10]]
+  
+  // Add Unicode control characters for proper display
+  print(bidiRope.toStringWithControls());
+  
+  // Convert back to regular rope if needed
+  final regularRope = bidiRope.toRope();
+}
+```
+
 ## 🧪 Running Tests
 
 Use the `test` package:
@@ -94,7 +121,17 @@ class TextSummary {
 }
 ```
 
-This allows efficient traversal and slicing of large text structures.
+The `BidiRope` class extends the functionality with bidirectional text awareness:
+```dart
+class BidiRope {
+  final Rope _rope;
+  final bool _containsRtl;
+  
+  // Methods for bidirectional text handling
+}
+```
+
+This allows efficient traversal and slicing of large text structures, with proper handling of mixed LTR/RTL content following the Unicode Bidirectional Algorithm.
 
 ## 📄 License
 
