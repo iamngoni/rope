@@ -34,11 +34,11 @@ class InternalNode<T extends Chunk> extends SumTreeNode<T> {
 
   /// The list of child nodes stored in this internal node.
   final List<SumTreeNode<T>> children;
-  
+
   /// Pre-computed summaries for each individual child node.
   /// This allows for faster access to metadata without recalculation.
   final List<Summary> childSummaries;
-  
+
   /// The combined summary for all children in this subtree.
   /// This enables efficient operations on the entire subtree.
   @override
@@ -148,8 +148,15 @@ class InternalNode<T extends Chunk> extends SumTreeNode<T> {
   /// Returns the chunk containing that position, or null if the index is out of bounds.
   @override
   T? itemAt(int index) {
-    final i = _childIndexForOffset(index);
-    return children[i].itemAt(index);
+    int offset = 0;
+    for (final child in children) {
+      final childLen = (child.summary as TextSummary).length;
+      if (index < offset + childLen) {
+        return child.itemAt(index - offset);
+      }
+      offset += childLen;
+    }
+    return null;
   }
 
   /// Returns the character at the specified index.

@@ -232,8 +232,10 @@ void main() {
         LeafNode([chunk2]),
       ]);
 
-      expect(node.itemAt(6), isNotNull);
-      expect(node.itemAt(6), contains('World'));
+      final item = node.itemAt(6);
+
+      expect(item, isNotNull);
+      expect(item?.text, contains('World'));
     });
 
     test('substring returns correct text portion', () {
