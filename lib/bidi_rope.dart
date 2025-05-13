@@ -7,3 +7,4 @@ library bidi_rope;
 
 export 'src/unicode/bidirectional.dart';
 export 'src/unicode/bidi_rope.dart';
+export 'src/unicode/line_breaking.dart';
