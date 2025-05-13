@@ -1,3 +1,6 @@
+## 0.0.5
+- Bidirectional text line breaking support (by [Nyasha Karata](https://github.com/odlemon))
+
 ## 0.0.4
 - Bidirectional text support for Rope data structure (by [Nyasha Karata](https://github.com/odlemon))
 

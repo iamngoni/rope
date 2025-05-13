@@ -2,7 +2,7 @@
 
 A fast, immutable rope data structure in Dart using a SumTree architecture.
 Inspired by Zed's implementation, this rope is optimized for large-scale string manipulation and editor-like use cases.
-Supports bidirectional text handling for mixed LTR/RTL content (Arabic, Hebrew, Persian, etc).
+Supports bidirectional text handling for mixed LTR/RTL content (Arabic, Hebrew, Persian, etc) with line breaking capabilities.
 
 ---
 
@@ -19,6 +19,7 @@ Developed with 💙 by [Ngonidzashe Mangudya](https://twitter.com/iamngoni_)
 - Efficient `insert`, `delete`, `split`, `concat`, `substring`, `charAt`
 - Multi-line and character-aware summaries (`TextSummary`)
 - **Bidirectional text support** for languages with right-to-left scripts
+- **Line breaking support** for proper text wrapping of mixed LTR/RTL content
 - Designed for speed, immutability, and extensibility
 
 ## 📦 Installation
@@ -95,6 +96,39 @@ void main() {
 }
 ```
 
+### Line Breaking Support
+
+```dart
+void main() {
+  // Create a bidirectional rope with mixed LTR/RTL text
+  final text = 'This is a mixed text with שלום עולם and more English.';
+  final rope = BidiRope.fromString(text);
+  
+  // Break lines by character count (simple approach)
+  final lines1 = rope.breakLinesSimple(20);
+  print(lines1); // List of line segments respecting bidirectional text
+  
+  // Break lines by measured width using a custom measuring function
+  double measureText(String text) => text.length.toDouble();
+  final lines2 = rope.breakLines(measureText, 20.0);
+  
+  // Custom measuring function for more precise text layout
+  double customMeasure(String s) {
+    double width = 0;
+    for (int i = 0; i < s.length; i++) {
+      if (s[i].toUpperCase() == s[i] && s[i].toLowerCase() != s[i]) {
+        width += 2; // Uppercase letters count as 2
+      } else {
+        width += 1; 
+      }
+    }
+    return width;
+  }
+  
+  final lines3 = rope.breakLines(customMeasure, 30.0);
+}
+```
+
 ## 🧪 Running Tests
 
 Use the `test` package:
@@ -128,10 +162,11 @@ class BidiRope {
   final bool _containsRtl;
   
   // Methods for bidirectional text handling
+  // Line breaking methods for text wrapping
 }
 ```
 
-This allows efficient traversal and slicing of large text structures, with proper handling of mixed LTR/RTL content following the Unicode Bidirectional Algorithm.
+This allows efficient traversal and slicing of large text structures, with proper handling of mixed LTR/RTL content following the Unicode Bidirectional Algorithm. The line breaking capabilities respect bidirectional text properties when wrapping text into multiple lines.
 
 ## 📄 License
 
