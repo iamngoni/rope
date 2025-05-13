@@ -3,16 +3,10 @@ import 'bidirectional.dart';
 import 'line_breaking.dart';
 
 class BidiRope {
-  final Rope _rope;
-  final bool _containsRtl;
   
   BidiRope._(this._rope, this._containsRtl);
   
   factory BidiRope.fromString(String text) {
-    if (text == null) {
-      throw ArgumentError.notNull('text');
-    }
-    
     final rope = Rope.fromString(text);
     final containsRtl = BidirectionalText.containsRtl(text);
     return BidiRope._(rope, containsRtl);
@@ -21,6 +15,8 @@ class BidiRope {
   factory BidiRope.empty() {
     return BidiRope.fromString('');
   }
+  final Rope _rope;
+  final bool _containsRtl;
   
   int get length => _rope.length;
   bool get containsRtl => _containsRtl;
@@ -57,10 +53,6 @@ class BidiRope {
   }
   
   BidiRope insert(int index, String text) {
-    if (text == null) {
-      throw ArgumentError.notNull('text');
-    }
-    
     if (index < 0 || index > length) {
       throw RangeError.range(index, 0, length, 'index');
     }
@@ -101,10 +93,6 @@ class BidiRope {
   }
   
   BidiRope concat(BidiRope other) {
-    if (other == null) {
-      throw ArgumentError.notNull('other');
-    }
-    
     final newRope = _rope.concat(other._rope);
     final containsRtl = _containsRtl || other._containsRtl;
     
@@ -151,10 +139,6 @@ class BidiRope {
     double Function(String) measureText, 
     double maxWidth
   ) {
-    if (measureText == null) {
-      throw ArgumentError.notNull('measureText');
-    }
-    
     if (maxWidth < 0) {
       throw ArgumentError.value(maxWidth, 'maxWidth', 'must be non-negative');
     }
@@ -217,8 +201,8 @@ class BidiRope {
       for (final segment in segments) {
         if (currentLine.isEmpty) {
           currentLine = segment;
-        } else if ((currentLine + ' ' + segment).length <= maxCharsPerLine) {
-          currentLine += ' ' + segment;
+        } else if ('$currentLine $segment'.length <= maxCharsPerLine) {
+          currentLine += ' $segment';
         } else {
           lines.add(currentLine);
           currentLine = segment;
@@ -244,8 +228,8 @@ class BidiRope {
       for (final segment in segments) {
         if (currentLine.isEmpty) {
           currentLine = segment;
-        } else if ((currentLine + ' ' + segment).length <= maxCharsPerLine) {
-          currentLine += ' ' + segment;
+        } else if ('$currentLine $segment'.length <= maxCharsPerLine) {
+          currentLine += ' $segment';
         } else {
           lines.add(currentLine);
           currentLine = segment;
@@ -277,7 +261,7 @@ class BidiRope {
     
     for (int i = 0; i < lines.length; i++) {
       if (i < lines.length - 1) {
-        result.add(lines[i] + '\n');
+        result.add('${lines[i]}\n');
       } else {
         result.add(lines[i]);
       }
